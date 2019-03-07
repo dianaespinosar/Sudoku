@@ -128,3 +128,33 @@ public class Sudoku {
     }
     
 }
+
+
+
+
+private static boolean contestar(int[][] sudoku, int iBase,
+        int jBase){
+        int numPos = 1;
+        for(int i = iBase; i < 9; i++){
+            for(int j = jBase; j < 9; j++){
+                if(sudoku[i][j] == 0){
+                    while (numPos < 9 && !posible(sudoku, i, j, numPos))
+                        numPos++;
+                
+                    if(numPos < 9){
+                        sudoku[i][j] = numPos;
+                        if(contestar(sudoku, 0, 0))
+                            return true;
+                                               
+                        else
+                            return true;
+                    }
+
+                    else    
+                        return false;
+                }
+                             
+            }
+        }
+        return true;        
+    }
