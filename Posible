@@ -108,7 +108,7 @@ public class Sudoku {
                     for(int num = 1; num <= 9; num++){
                         if(posible(sudoku, i, j, num)){
                             sudoku[i][j] = num;
-                            System.out.println(i + " " + j + " " + sudoku[i][j]);
+                           
                             if(contestar(sudoku, 0, 0))
                                 return true;
                             else
