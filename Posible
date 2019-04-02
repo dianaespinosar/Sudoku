@@ -92,60 +92,58 @@ public class Sudoku {
         return res;
     }
     
-    public static boolean contestar(int[][] sudoku){
-        
-            return contestar(sudoku, 0, 0);
+    
+    public static boolean pasaMatriz(int[][] sudoku){
+        if(sudoku != null)
+            return pasaMatriz(sudoku, 0, 0, 1);
+        else
+            return false;
     }
     
-    private static boolean contestar(int[][] sudoku, int iBase,
-        int jBase){
-        int numPos = 1;
-        
-        for(int i = iBase; i < 9; i++){
-            for(int j = jBase; j < 9; j++){
+    private static boolean pasaMatriz(int[][]sudoku, int i, int j, int posNum){
+        //System.out.println("i = " + i + "\n");
+        if(i <9){
+            //System.out.println("j = " + j + "\n");
+            if(j < 9){
+                //System.out.println(" sudoku[i][j] = " + sudoku[i][j] + "\n");
                 if(sudoku[i][j] == 0){
                     
-                    for(int num = 1; num <= 9; num++){
-                        if(posible(sudoku, i, j, num)){
-                            sudoku[i][j] = num;
-                           
-                            if(contestar(sudoku, 0, 0))
-                                return true;
-                            else
+                    if(posNum < 10){
+                        //System.out.println( posNum + " < 10\n");
+                        if(posible(sudoku, i, j, posNum)){
+                            //System.out.println(posNum + " es posible\n");
+                            sudoku[i][j] = posNum;
+                            if(!pasaMatriz(sudoku, i, j + 1, 1)){
                                 sudoku[i][j] = 0;
+                                return pasaMatriz(sudoku, i, j, posNum + 1);
+                            }
+
                         }
+                        else
+                            return pasaMatriz(sudoku, i, j, posNum + 1);
                     }
-                    return false;
+                    else
+                        return false;
                 }
-                             
+                else
+                    return pasaMatriz(sudoku, i, j + 1, 1);
+                
+                
             }
+            
+            else{
+                
+                return pasaMatriz(sudoku, i + 1, 0, 1);
+            }
+                
         }
-        return true;        
+        return true;
+        
     }
     
-    /*
-    private static boolean contestar(int[][] sudoku, int iBase,
-        int jBase){
-        int numPos = 1;
-        int i = iBase;
-        int j = jBase;
-        boolean res = true;
-        while(res && i < 9){
-            while(res && j < 9){
-                while(!posible(sudoku, i, j, numPos))
-                    numPos++;
-                if(numPos > 10)
-                    return false;
-                else
-                    return contestar(sudoku, i, j + 1);
-            }
-            i++;
-            j = 0;
-        }
-        
-        return res;
-    }
-    */
+    
+    
+    
     public static void main(String[] args) {
         int[][] sudoku = new int[9][9];
         sudoku[0][0] = 1;
@@ -191,29 +189,39 @@ public class Sudoku {
 
 
 
-private static boolean contestar(int[][] sudoku, int iBase,
+
+Código encontrado en internet para verificar la matriz
+
+
+    
+    public static boolean contestar(int[][] sudoku){
+        
+            return contestar(sudoku, 0, 0);
+    }
+    
+    private static boolean contestar(int[][] sudoku, int iBase,
         int jBase){
         int numPos = 1;
+        
         for(int i = iBase; i < 9; i++){
             for(int j = jBase; j < 9; j++){
                 if(sudoku[i][j] == 0){
-                    while (numPos < 9 && !posible(sudoku, i, j, numPos))
-                        numPos++;
-                
-                    if(numPos < 9){
-                        sudoku[i][j] = numPos;
-                        if(contestar(sudoku, 0, 0))
-                            return true;
-                                               
-                        else
-                            return true;
+                    
+                    for(int num = 1; num <= 9; num++){
+                        if(posible(sudoku, i, j, num)){
+                            sudoku[i][j] = num;
+                           
+                            if(contestar(sudoku, 0, 0))
+                                return true;
+                            else
+                                sudoku[i][j] = 0;
+                        }
                     }
-
-                    else    
-                        return false;
+                    return false;
                 }
                              
             }
         }
         return true;        
     }
+
