@@ -1,43 +1,7 @@
 package sudoku;
+import IteradorArreglo.ConjuntoArreglo;
 
 public class Sudoku {
-    
-    public ConjuntoArreglo posiblesNumeros(int[][] sudoku, int iBase, int jBase){
-        ConjuntoArreglo res = new ConjuntoArreglo(9);
-        for(int k = 1; k < 10; k++){
-            res.agrega(k);
-        }
-       
-        int i = (iBase + 1) % 9;
-        int j = (jBase + 1) % 9;
-        int m1 = iBase / 3;
-        int m2 = jBase / 3;
-        int r1 = iBase % 3;
-        int r2 = iBase % 3;
-        int a = 3 * m1 + ((r1 + 1) % 3);
-        int b = 3 * m2 + ((r2 + 1) % 3);
-        int c = 3 * m1 + ((r1 + 2) % 3);
-        int d = 3 * m2 + ((r2 + 2) % 3);
-        
-        while (i != iBase){
-            res.quita(sudoku[i][jBase]);
-            i = (i + 1) % 9;
-        }
-        
-        while(j != jBase ){
-            res.quita(sudoku[iBase][j] );
-            j = (j + 1) % 9;
-        }
-        
-        
-    }
-    
-
-
-
-
-
-
     public static String imprime(int[][] sudoku, int ren, int col){
         StringBuilder res = new StringBuilder();
         if(sudoku != null)
