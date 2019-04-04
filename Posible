@@ -31,7 +31,7 @@ public class Sudoku {
         int d = 3 * m2 + ((r2 + 2) % 3);
         
         if(sudoku != null && sudoku[iBase][jBase] == 0){
-            res = true;
+            res = true;//porque no else?
             
             if(sudoku[a][b] == posNum || sudoku[a][d] == posNum ||
                     sudoku[c][b] == posNum || sudoku[c][d] == posNum )
