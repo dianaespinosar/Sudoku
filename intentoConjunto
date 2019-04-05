@@ -1,7 +1,3 @@
-
-//en el caso [2][6] se crea un error, hace que [2][7] pase por 9 
-checar el método que crea el conjunto de los posibles, pone en ese caso que es posible el 9 y en ese cuadrante ya hay un 9
-
 package sudoku;
 
 import IteradorArreglo.ConjuntoArreglo;
@@ -23,12 +19,12 @@ public class Sudoku {
             int m1 = iBase / 3;
             int m2 = jBase / 3;
             int r1 = iBase % 3;
-            int r2 = iBase % 3;
+            int r2 = jBase % 3;
             int a = 3 * m1 + ((r1 + 1) % 3);
             int b = 3 * m2 + ((r2 + 1) % 3);
             int c = 3 * m1 + ((r1 + 2) % 3);
             int d = 3 * m2 + ((r2 + 2) % 3);
-
+            
             while (i != iBase){
                 res.quita(sudoku[i][jBase]);
                 i = (i + 1) % 9;
@@ -38,10 +34,14 @@ public class Sudoku {
                 res.quita(sudoku[iBase][j] );
                 j = (j + 1) % 9;
             }
-        
-            res.quita(sudoku[a][b]);
-            res.quita(sudoku[a][d]);
+            
+            
+            res.quita(sudoku[a][b] );
+            
+            res.quita(sudoku[a][d] );
+            
             res.quita(sudoku[c][b]);
+            
             res.quita(sudoku[c][d]);
        
         }
@@ -93,8 +93,7 @@ public class Sudoku {
                         
                         if(res.getCardinalidad() == 0){
                             sudoku[i][j] = 0;
-                            System.out.println("No tiene opciones de número");
-                            return false;
+                            System.out.println("No tiene opciones de número el siguiente número.");
                         }
                         System.out.println("Cardinalidad de res es " + res.getCardinalidad());
                         aux = res.iterator();
@@ -174,46 +173,31 @@ public class Sudoku {
     }
     
     public static void main(String[] args) {
-        int[][] sudoku = new int[9][9];
-        sudoku[0][0] = 1;
-        sudoku[0][1] = 5;
-        sudoku[0][3] = 6;
-        sudoku[0][5] = 3;
-        sudoku[0][7] = 2;
-        sudoku[1][4] = 4;
-        sudoku[1][6] = 3;
-        sudoku[1][7] = 7;
-        sudoku[1][8] = 8;
-        sudoku[2][0] = 3;
-        sudoku[2][5] = 8;
-        sudoku[3][0] = 5;
-        sudoku[3][1] = 1;
-        sudoku[3][6] = 9;
-        sudoku[4][7] = 1;
-        sudoku[4][2] = 2;
-        sudoku[4][6] = 6;
-        sudoku[5][3] = 3;
-        sudoku[5][6] = 2;
-        sudoku[6][0] = 7;
-        sudoku[6][1] = 3;
-        sudoku[6][2] = 5;
-        sudoku[6][3] = 8;
-        sudoku[6][8] = 6;;
-        sudoku[7][1] = 8;
-        sudoku[7][7] = 4;
-        sudoku[8][1] = 6;
-        sudoku[8][2] = 9;
-        sudoku[8][6] = 8;
+        
+        int [][] sudoku = {{1, 5, 0, 6, 0, 3, 0, 2, 9},
+                          {0, 0, 0, 0, 4, 0, 3, 7, 8},
+                          {3, 0, 0, 0, 0, 8, 0, 0, 0},
+                          {5, 1, 0, 0, 0, 0, 9, 0, 0},
+                          {0, 0, 2, 0, 0, 0, 6, 1, 0},
+                          {0, 0, 0, 3, 0, 0, 2, 0, 0},
+                          {7, 3, 5, 8, 0, 0, 0, 0, 6},
+                          {0, 8, 0, 0, 0, 0, 0, 4, 0},
+                          {0, 6, 9, 0, 0, 0, 8, 0, 0}};
+       
         System.out.println(imprime(sudoku, 9, 9));
-        System.out.println(posiblesNumeros(sudoku, 0, 6).toString());
+        /*System.out.println(posiblesNumeros(sudoku, 0, 2).toString());
+        System.out.println(posiblesNumeros(sudoku, 1, 1).toString());
+        System.out.println(posiblesNumeros(sudoku, 2, 6).toString());
+        System.out.println(posiblesNumeros(sudoku, 2, 7).toString());         
+        System.out.println(posiblesNumeros(sudoku, 5, 5).toString());
         System.out.println(posiblesNumeros(sudoku, 0, 2).toString() + "cardinalidad es " + posiblesNumeros(sudoku, 0, 2).getCardinalidad());
         System.out.println(posiblesNumeros(sudoku, 0, 4).toString());
         System.out.println(posiblesNumeros(sudoku, 1, 2).toString() + " de [1][2]");
-        //System.out.println(posible(sudoku, 0,6,1)); //false
-        //System.out.println(posible(sudoku, 0,2,3)); //false
-        //System.out.println(posible(sudoku, 0,2,2)); //false
-        //System.out.println(posible(sudoku, 0,1,3)); 
-        
+        System.out.println(posible(sudoku, 0,6,1)); //false
+        System.out.println(posible(sudoku, 0,2,3)); //false
+        System.out.println(posible(sudoku, 0,2,2)); //false
+        System.out.println(posible(sudoku, 0,1,3)); 
+        */
         
         pasaMatriz(sudoku);
         System.out.println(imprime(sudoku, 9, 9));
