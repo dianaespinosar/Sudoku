@@ -4,13 +4,8 @@ import IteradorArreglo.ConjuntoArreglo;
 import java.util.Iterator;
 
 public class Sudoku {
-    
-
-
-//Código intento con conjuntos
-
-
-    public static ConjuntoArreglo posiblesNumeros(int[][] sudoku, int iBase, int jBase){
+ //Código intento con conjuntos
+   public static ConjuntoArreglo posiblesNumeros(int[][] sudoku, int iBase, int jBase){
         
         ConjuntoArreglo res = new ConjuntoArreglo(9);
         
@@ -67,15 +62,14 @@ public class Sudoku {
         ConjuntoArreglo res = new ConjuntoArreglo();
         int posNum;
         Iterator aux;
+        System.out.println(imprime(sudoku, 9, 9));
         System.out.println("i = " + i + "\n");
-        
         if(i <9){
             System.out.println("j = " + j + "\n");
             if(j < 9){
                 System.out.println("sudoku[" + i + "][" + j + "] = " + sudoku[i][j] + "\n");
                 if(sudoku[i][j] == 0){
                    
-                    
                     if(it.hasNext()){
                         
                         System.out.println("it has next line");
@@ -84,22 +78,22 @@ public class Sudoku {
                         sudoku[i][j] = posNum;
                         System.out.println("si");
                         if(j < 8){
-                            System.out.println("aquí no");
                             res =  posiblesNumeros(sudoku, i, j + 1);
-                            System.out.println("La cardinalidad del conjunto posible es " + res.getCardinalidad());
-                            aux = res.iterator();
                         }
-                        else{
+                        else if(i < 8){
                             res = posiblesNumeros(sudoku, i + 1, 0);
-                            aux = it;
-                        }  
+                        }
+                        else
+                            return true;
                         
                         
                         if(res.getCardinalidad() == 0){
+                            sudoku[i][j] = 0;
                             System.out.println("No tiene opciones de número");
                             return false;
                         }
-                        
+                        System.out.println("Cardinalidad de res es " + res.getCardinalidad());
+                        aux = res.iterator();
                         
                         if(!pasaMatriz(sudoku, i, j + 1, aux)){
                             sudoku[i][j] = 0;
@@ -107,17 +101,33 @@ public class Sudoku {
                             return pasaMatriz(sudoku, i, j,it);
                         }
                     }
-                    else
+                    else{
+                        System.out.println("it no tiene más elementos");
                         return false;
+                    }
                 }
                 else{
                     if(j == 8){
-                       aux = posiblesNumeros(sudoku, i + 1, 0).iterator();
-                        return pasaMatriz(sudoku, i + 1, 0, aux);
+                        if(i == 8)
+                            return true;
+                        else{
+                            res = posiblesNumeros(sudoku, i + 1, 0);
+                            if(res.getCardinalidad() == 0)
+                                return false;
+                            aux = res.iterator();
+                            System.out.println("Cardinalidad de que sigue es " + res.getCardinalidad());
+                            return pasaMatriz(sudoku, i + 1, 0, aux);
+                        }
                     }
-                    else
-                        aux = posiblesNumeros(sudoku, i, j + 1).iterator();
-                    return pasaMatriz(sudoku, i, j + 1, aux);
+                    else{
+                        
+                        res = posiblesNumeros(sudoku, i, j + 1);
+                        if(res.getCardinalidad() == 0)
+                            return false;
+                        aux = res.iterator();
+                        System.out.println("Cardinalidad del que sigue es " + res.getCardinalidad());
+                        return pasaMatriz(sudoku, i, j + 1, aux);
+                    }
                 }
                     
                 
@@ -126,8 +136,13 @@ public class Sudoku {
             
             else{
                 System.out.println("j es " + j + " , por lo que baja de renglón.");
-                aux = posiblesNumeros(sudoku, i + 1, 0).iterator();
-                return pasaMatriz(sudoku, i + 1, 0, aux);
+                if(i < 8){
+                    aux = posiblesNumeros(sudoku, i + 1, 0).iterator();
+                    return pasaMatriz(sudoku, i + 1, 0, aux);
+                }
+                else
+                    return true;
+                
             }
                 
         }
@@ -153,98 +168,6 @@ public class Sudoku {
         
         return res.toString();
     }
-    
-    public static boolean posible(int[][] sudoku, int iBase,
-        int jBase, int posNum){
-        boolean res = false;
-        int i = (iBase + 1) % 9;
-        int j = (jBase + 1) % 9;
-        int m1 = iBase / 3;
-        int m2 = jBase / 3;
-        int r1 = iBase % 3;
-        int r2 = iBase % 3;
-        int a = 3 * m1 + ((r1 + 1) % 3);
-        int b = 3 * m2 + ((r2 + 1) % 3);
-        int c = 3 * m1 + ((r1 + 2) % 3);
-        int d = 3 * m2 + ((r2 + 2) % 3);
-        
-        if(sudoku != null && sudoku[iBase][jBase] == 0){
-            res = true;
-            
-            if(sudoku[a][b] == posNum || sudoku[a][d] == posNum ||
-                    sudoku[c][b] == posNum || sudoku[c][d] == posNum )
-                res = false;
-            
-            while(res && i != iBase ){
-                if(sudoku[i][jBase] == posNum)
-                    res = false;
-                
-                i = (i + 1) % 9;
-            }
-
-            while(res && j != jBase ){
-                if(sudoku[iBase][j] == posNum)
-                    res = false;
-                
-                j = (j + 1) % 9;
-            }
-                
-        }
-        
-        return res;
-    }
-    
-    
-    /*public static boolean pasaMatriz(int[][] sudoku){
-        if(sudoku != null)
-            return pasaMatriz(sudoku, 0, 0, 1);
-        else
-            return false;
-    }
-    
-    private static boolean pasaMatriz(int[][]sudoku, int i, int j, int posNum){
-        //System.out.println("i = " + i + "\n");
-        if(i <9){
-            //System.out.println("j = " + j + "\n");
-            if(j < 9){
-                //System.out.println(" sudoku[i][j] = " + sudoku[i][j] + "\n");
-                if(sudoku[i][j] == 0){
-                    
-                    if(posNum < 10){
-                        //System.out.println( posNum + " < 10\n");
-                        if(posible(sudoku, i, j, posNum)){
-                            //System.out.println(posNum + " es posible\n");
-                            sudoku[i][j] = posNum;
-                            if(!pasaMatriz(sudoku, i, j + 1, 1)){
-                                sudoku[i][j] = 0;
-                                return pasaMatriz(sudoku, i, j, posNum + 1);
-                            }
-
-                        }
-                        else
-                            return pasaMatriz(sudoku, i, j, posNum + 1);
-                    }
-                    else
-                        return false;
-                }
-                else
-                    return pasaMatriz(sudoku, i, j + 1, 1);
-                
-                
-            }
-            
-            else{
-                
-                return pasaMatriz(sudoku, i + 1, 0, 1);
-            }
-                
-        }
-        return true;
-        
-    }
-    
-    */
-    
     
     public static void main(String[] args) {
         int[][] sudoku = new int[9][9];
@@ -282,10 +205,10 @@ public class Sudoku {
         System.out.println(posiblesNumeros(sudoku, 0, 2).toString() + "cardinalidad es " + posiblesNumeros(sudoku, 0, 2).getCardinalidad());
         System.out.println(posiblesNumeros(sudoku, 0, 4).toString());
         System.out.println(posiblesNumeros(sudoku, 1, 2).toString() + " de [1][2]");
-        System.out.println(posible(sudoku, 0,6,1)); //false
-        System.out.println(posible(sudoku, 0,2,3)); //false
-        System.out.println(posible(sudoku, 0,2,2)); //false
-        System.out.println(posible(sudoku, 0,1,3)); 
+        //System.out.println(posible(sudoku, 0,6,1)); //false
+        //System.out.println(posible(sudoku, 0,2,3)); //false
+        //System.out.println(posible(sudoku, 0,2,2)); //false
+        //System.out.println(posible(sudoku, 0,1,3)); 
         
         
         pasaMatriz(sudoku);
@@ -293,6 +216,3 @@ public class Sudoku {
     }
     
 }
-
-
-
