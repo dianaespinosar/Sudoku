@@ -1,3 +1,7 @@
+
+//en el caso [2][6] se crea un error, hace que [2][7] pase por 9 
+checar el método que crea el conjunto de los posibles, pone en ese caso que es posible el 9 y en ese cuadrante ya hay un 9
+
 package sudoku;
 
 import IteradorArreglo.ConjuntoArreglo;
