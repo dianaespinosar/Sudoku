@@ -201,6 +201,25 @@ public class Sudoku {
         
         pasaMatriz(sudoku);
         System.out.println(imprime(sudoku, 9, 9));
+        
+        int [][] sudoku1 = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 3, 0, 8, 5},  
+                            {0, 0, 1, 0, 2, 0, 0, 0, 0},
+                            {0, 0, 0, 5, 0, 7, 0, 0, 0},
+                            {0, 0, 4, 0, 0, 0, 1, 0, 0},
+                            {0, 9, 0, 0, 0, 0, 0, 0, 0},
+                            {5, 0, 0, 0, 0, 0, 0, 7, 3},
+                            {0, 0, 2, 0, 1, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 4, 0, 0, 0, 9}};
+        System.out.println(imprime(sudoku1, 9, 9));
+        pasaMatriz(sudoku1);
+        System.out.println(imprime(sudoku1, 9, 9));
+        
     }
     
 }
+
+//hacer que i y j funciones como módulo y que inicie en el renglón y cuadrante con más información.
+//te va a decir que cuadrante de las esquinas tiene más números y por ese va a iniciar, rotando la figura.
+public void queLadoIniciar(int[][]sudoku){
+
